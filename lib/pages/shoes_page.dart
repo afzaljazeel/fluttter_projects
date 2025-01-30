@@ -4,7 +4,7 @@ import 'package:fluttter_projects/widgets/banner.dart'; // Import ShoeBanner wid
 import 'package:fluttter_projects/widgets/custom_footer.dart'; // Import reusable footer
 
 class ShoesPage extends StatelessWidget {
-  final VoidCallback toggleTheme; // ✅ Accept toggleTheme
+  final VoidCallback toggleTheme; // Accept toggleTheme
 
   ShoesPage({super.key, required this.toggleTheme});
 
@@ -145,7 +145,7 @@ class ShoesPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar:
-          CustomFooter(toggleTheme: toggleTheme), // ✅ Pass toggleTheme
+          CustomFooter(toggleTheme: toggleTheme), //  Pass toggleTheme
     );
   }
 

@@ -29,7 +29,7 @@ class CustomFooter extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => AppHomeScreen(
-                        toggleTheme: toggleTheme)), // ✅ Pass toggleTheme
+                        toggleTheme: toggleTheme)), //  Pass toggleTheme
               );
             },
           ),

@@ -6,7 +6,7 @@ import 'package:fluttter_projects/widgets/custom_footer.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AppHomeScreen extends StatefulWidget {
-  final VoidCallback toggleTheme; // ✅ Accept toggleTheme
+  final VoidCallback toggleTheme; //  Accept toggleTheme
 
   const AppHomeScreen({super.key, required this.toggleTheme});
 
@@ -37,7 +37,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                       IconButton(
                         icon: const Icon(
                             Icons.brightness_6), // Theme Toggle Button
-                        onPressed: widget.toggleTheme, // ✅ Call toggleTheme
+                        onPressed: widget.toggleTheme, //  Call toggleTheme
                       ),
                       Stack(
                         clipBehavior: Clip.none,
@@ -109,7 +109,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                         MaterialPageRoute(
                             builder: (context) => PerfumesPage(
                                 toggleTheme:
-                                    widget.toggleTheme)), // ✅ Pass toggleTheme
+                                    widget.toggleTheme)), //  Pass toggleTheme
                       );
                     },
                   ),
@@ -123,7 +123,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                         MaterialPageRoute(
                             builder: (context) => ShoesPage(
                                 toggleTheme:
-                                    widget.toggleTheme)), // ✅ Pass toggleTheme
+                                    widget.toggleTheme)), //  Pass toggleTheme
                       );
                     },
                   ),
@@ -134,7 +134,7 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
         ),
       ),
       bottomNavigationBar: CustomFooter(
-          toggleTheme: widget.toggleTheme), // ✅ Pass toggleTheme to footer
+          toggleTheme: widget.toggleTheme), //  Pass toggleTheme to footer
     );
   }
 

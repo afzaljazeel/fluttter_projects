@@ -135,7 +135,7 @@ class PerfumesPage extends StatelessWidget {
     );
   }
 
-  ///  `_categoryCard` Method
+  ///  `_categoryCard Method
   Widget _categoryCard(String imagePath, String label, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
