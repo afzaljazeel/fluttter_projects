@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:fluttter_projects/pages/app_home_screen.dart';
+import 'package:fluttter_projects/pages/app_home_screen.dart'; // Home screen
 import 'package:iconsax/iconsax.dart';
 
 class AppMainScreen extends StatefulWidget {
-  const AppMainScreen({super.key});
+  final int selectedIndex; // To set the default tab (e.g., Home)
+  final Widget? body; // Optional custom content for the main screen
+
+  const AppMainScreen({
+    super.key,
+    this.selectedIndex = 0, // Default to Home tab
+    this.body,
+  });
 
   @override
   State<AppMainScreen> createState() => _AppMainScreenState();
 }
 
 class _AppMainScreenState extends State<AppMainScreen> {
-  int selectedIndex = 0;
-  final List pages = [
-    const AppHomeScreen(),
-    const Scaffold(),
-    const Scaffold(),
-    const Scaffold(),
+  late int selectedIndex;
+
+  // Only Home tab is functional for now
+  final List<Widget> pages = [
+    const AppHomeScreen(), // Home Screen
+    const Scaffold(
+        body: Center(child: Text("Cart Page Not Linked"))), // Placeholder
+    const Scaffold(
+        body: Center(child: Text("Profile Page Not Linked"))), // Placeholder
   ];
 
-  //bottom navigation bar
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.selectedIndex; // Initialize with the passed index
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +44,17 @@ class _AppMainScreenState extends State<AppMainScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,
         onTap: (value) {
-          setState(() {});
-          selectedIndex = value;
+          if (value == 0) {
+            // Home tab is functional
+            setState(() {
+              selectedIndex = value;
+            });
+          } else {
+            // Show a message for inactive tabs
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("This tab is not linked yet.")),
+            );
+          }
         },
         elevation: 0,
         backgroundColor: Colors.white,
@@ -41,12 +64,8 @@ class _AppMainScreenState extends State<AppMainScreen> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Iconsax.search_normal),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Iconsax.notification),
-            label: "Notification",
+            icon: Icon(Iconsax.shopping_bag),
+            label: "Cart",
           ),
           BottomNavigationBarItem(
             icon: Icon(Iconsax.user),
@@ -54,7 +73,8 @@ class _AppMainScreenState extends State<AppMainScreen> {
           ),
         ],
       ),
-      body: pages[selectedIndex],
+      body: widget.body ??
+          pages[selectedIndex], // Show custom content or default page
     );
   }
 }

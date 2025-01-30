@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttter_projects/pages/app_main_screen.dart';
+import 'package:fluttter_projects/pages/login_page.dart';
+import 'package:fluttter_projects/pages/splash_screen.dart';
+import 'package:fluttter_projects/pages/register_page.dart';
+import 'package:fluttter_projects/pages/app_home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,12 +11,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppMainScreen(),
+      title: 'My App',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/home': (context) => const AppHomeScreen(),
+      },
     );
   }
 }
