@@ -8,7 +8,7 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 23, 126, 127),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -50,7 +50,7 @@ class RegisterPage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Color.fromARGB(255, 23, 126, 127),
               ),
               child: const Text(
                 'Register',

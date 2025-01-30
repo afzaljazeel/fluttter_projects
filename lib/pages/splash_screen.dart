@@ -24,7 +24,7 @@ class SplashScreen extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: const Color.fromARGB(255, 23, 126, 127),
             ),
             child: const Text(
               'Login',

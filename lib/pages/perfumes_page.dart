@@ -1,32 +1,44 @@
 import 'package:flutter/material.dart';
-import 'product_details_page.dart'; // Import the ProductDetailsPage
-import 'package:fluttter_projects/widgets/banner.dart'; // Import the PerfumeBanner widget
-import 'package:fluttter_projects/pages/app_main_screen.dart'; // Import the footer
+import 'product_details_page.dart'; // Import ProductDetailsPage
+import 'package:fluttter_projects/widgets/banner.dart'; // Import PerfumeBanner widget
+import 'package:fluttter_projects/widgets/custom_footer.dart'; // Import reusable footer
 
 class PerfumesPage extends StatelessWidget {
-  PerfumesPage({super.key});
+  final VoidCallback toggleTheme; // Accept toggleTheme function
 
-  // Manually defined product list
+  PerfumesPage({super.key, required this.toggleTheme});
+
   final List<Map<String, String>> products = [
     {
       "image": "assets/product_0.jpg",
       "name": "Azzaro TMW",
-      "price": "LKR 38700",
+      "price": "LKR 38,700",
+      "description":
+          "Azzaro The Most Wanted opens a new olfactory chapter with a Fougere Woody Ambery accord, creating an addictive, sophisticated and magnetic trail.\n"
+              "Top notes: Cardamom.\n"
+              "Heart notes: Caramel.\n"
+              "Base notes: Woody Amber."
     },
     {
       "image": "assets/product_1.jpg",
       "name": "Bently Intense",
-      "price": "LKR 16300",
+      "price": "LKR 16,300",
+      "description":
+          "Bentley for Men Intense is an oriental spicy fragrance for men. It features a blend of leather, wood, and rum notes for a strong masculine scent."
     },
     {
       "image": "assets/product_2.jpg",
       "name": "CK Be",
-      "price": "LKR 32100",
+      "price": "LKR 32,100",
+      "description":
+          "Calvin Klein Be is a unisex fragrance with a fresh and clean aroma, featuring notes of bergamot, lavender, white musk, and sandalwood."
     },
     {
       "image": "assets/product_3.jpg",
-      "name": "Mont Blank Exp",
-      "price": "LKR 25000",
+      "name": "Mont Blanc Exp",
+      "price": "LKR 25,000",
+      "description":
+          "Mont Blanc Explorer is a woody aromatic fragrance, with notes of Italian bergamot, vetiver, and patchouli, representing adventure and elegance."
     },
   ];
 
@@ -34,72 +46,49 @@ class PerfumesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Perfumes"),
-        backgroundColor: Colors.white,
-        elevation: 0, // Flat AppBar style
-        foregroundColor: Colors.black, // Black text color for the AppBar
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        elevation: 1,
+        foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
+        title: const Text(
+          "Perfumes",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.brightness_6),
+            onPressed: toggleTheme, // Theme toggle button
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top Banner Section
             const PerfumeBanner(),
-
             const SizedBox(height: 20),
 
             // Categories Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Categories",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text("Categories",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-
             const SizedBox(height: 10),
 
             SizedBox(
-              height: 160, // Adjust height as needed
+              height: 160,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  _categoryCard(
-                    imagePath: "assets/mens.png",
-                    label: "For Men",
-                    onTap: () {
-                      // Handle Men's category navigation
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("For Men category clicked!")),
-                      );
-                    },
-                  ),
-                  _categoryCard(
-                    imagePath: "assets/womens.png",
-                    label: "For Women",
-                    onTap: () {
-                      // Handle Women's category navigation
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("For Women category clicked!")),
-                      );
-                    },
-                  ),
-                  _categoryCard(
-                    imagePath: "assets/demanded.png",
-                    label: "SL's Demanded",
-                    onTap: () {
-                      // Handle Demanded category navigation
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("SL's Demanded category clicked!")),
-                      );
-                    },
-                  ),
+                  _categoryCard("assets/mens.png", "For Men", () {}),
+                  _categoryCard("assets/womens.png", "For Women", () {}),
+                  _categoryCard("assets/demanded.png", "SL's Demanded", () {}),
                 ],
               ),
             ),
@@ -109,29 +98,22 @@ class PerfumesPage extends StatelessWidget {
             // Top Picks Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Top Picks",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text("Top Picks",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-
             const SizedBox(height: 10),
 
-            // Top Picks Grid
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length, // Use the product list count
+                itemCount: products.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // 2 products per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.7, // Adjust for product card size
+                  childAspectRatio: 0.7,
                 ),
                 itemBuilder: (context, index) {
                   final product = products[index];
@@ -140,7 +122,7 @@ class PerfumesPage extends StatelessWidget {
                     imagePath: product["image"]!,
                     name: product["name"]!,
                     price: product["price"]!,
-                    isClickable: index == 0, // First product is clickable
+                    description: product["description"]!,
                   );
                 },
               ),
@@ -148,16 +130,13 @@ class PerfumesPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const AppMainScreen(), // Add footer
+      bottomNavigationBar:
+          CustomFooter(toggleTheme: toggleTheme), // Pass toggleTheme to footer
     );
   }
 
-  // Widget for Category Card
-  Widget _categoryCard({
-    required String imagePath,
-    required String label,
-    required VoidCallback onTap,
-  }) {
+  ///  `_categoryCard` Method
+  Widget _categoryCard(String imagePath, String label, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -171,48 +150,41 @@ class PerfumesPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
-                ),
+                    image: AssetImage(imagePath), fit: BoxFit.cover),
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            Text(label,
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
           ],
         ),
       ),
     );
   }
 
-  // Widget for Product Card
+  /// Pass `description` to `ProductDetailsPage`
   Widget _productCard(
     BuildContext context, {
     required String imagePath,
     required String name,
     required String price,
-    required bool isClickable,
+    required String description,
   }) {
     return GestureDetector(
-      onTap: isClickable
-          ? () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductDetailsPage(
-                    imagePath: imagePath,
-                    name: name,
-                    price: price,
-                  ),
-                ),
-              );
-            }
-          : null, // Disable tap for non-clickable products
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+              imagePath: imagePath,
+              name: name,
+              price: price,
+              description: description, // Pass the description dynamically
+            ),
+          ),
+        );
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -221,26 +193,16 @@ class PerfumesPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
+                  image: AssetImage(imagePath), fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          Text(
-            price,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color.fromRGBO(19, 104, 90, 1),
-            ),
-          ),
+          Text(name,
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+          Text(price,
+              style: const TextStyle(
+                  fontSize: 14, color: Color.fromRGBO(19, 104, 90, 1))),
         ],
       ),
     );

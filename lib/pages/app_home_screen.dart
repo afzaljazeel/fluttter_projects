@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fluttter_projects/widgets/banner.dart'; // Import your HeroBanner widget
+import 'package:fluttter_projects/widgets/banner.dart';
+import 'package:fluttter_projects/pages/perfumes_page.dart';
+import 'package:fluttter_projects/pages/shoes_page.dart';
+import 'package:fluttter_projects/widgets/custom_footer.dart';
 import 'package:iconsax/iconsax.dart';
-import 'perfumes_page.dart'; // Import your PerfumesPage
-import 'shoes_page.dart'; // Import  ShoesPage
 
 class AppHomeScreen extends StatefulWidget {
-  const AppHomeScreen({super.key});
+  final VoidCallback toggleTheme; // ✅ Accept toggleTheme
+
+  const AppHomeScreen({super.key, required this.toggleTheme});
 
   @override
   State<AppHomeScreen> createState() => _AppHomeScreenState();
@@ -15,57 +18,55 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 50),
 
-            // Header Section
+            // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    "assets/comp_logo.png",
-                    height: 40,
-                  ),
-                  Stack(
-                    clipBehavior: Clip.none,
+                  Image.asset("assets/comp_logo.png", height: 40),
+                  Row(
                     children: [
-                      const Icon(
-                        Iconsax.shopping_bag,
-                        size: 28,
+                      IconButton(
+                        icon: const Icon(
+                            Icons.brightness_6), // Theme Toggle Button
+                        onPressed: widget.toggleTheme, // ✅ Call toggleTheme
                       ),
-                      Positioned(
-                        right: -3,
-                        top: -5,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Text(
-                            "3",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          const Icon(Iconsax.shopping_bag, size: 28),
+                          Positioned(
+                            right: -3,
+                            top: -5,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                  color: Colors.red, shape: BoxShape.circle),
+                              child: const Text("3",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
                             ),
-                          ),
-                        ),
+                          )
+                        ],
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // Hero Banner Section
+            // Hero Banner
             const HeroBanner(),
 
             const SizedBox(height: 20),
@@ -76,25 +77,15 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Shop by Categories",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  const Text("Shop by Categories",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                   TextButton(
                     onPressed: () {
-                      // Add action for "See all" if needed
                       debugPrint("See all clicked");
                     },
-                    child: const Text(
-                      "See all",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black45,
-                      ),
-                    ),
+                    child: const Text("See all",
+                        style: TextStyle(fontSize: 16, color: Colors.black45)),
                   ),
                 ],
               ),
@@ -110,29 +101,29 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
                 children: [
                   _categoryCard(
                     context,
-                    imagePath: "assets/perfumes.png", // Ensure this file exists
+                    imagePath: "assets/perfumes.png",
                     label: "Perfumes",
                     onTap: () {
-                      // Navigate to PerfumesPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PerfumesPage(),
-                        ),
+                            builder: (context) => PerfumesPage(
+                                toggleTheme:
+                                    widget.toggleTheme)), // ✅ Pass toggleTheme
                       );
                     },
                   ),
                   _categoryCard(
                     context,
-                    imagePath: "assets/shoes.jpg", // Ensure this file exists
+                    imagePath: "assets/shoes.jpg",
                     label: "Shoes",
                     onTap: () {
-                      // Navigate to PerfumesPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ShoesPage(),
-                        ),
+                            builder: (context) => ShoesPage(
+                                toggleTheme:
+                                    widget.toggleTheme)), // ✅ Pass toggleTheme
                       );
                     },
                   ),
@@ -142,15 +133,15 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomFooter(
+          toggleTheme: widget.toggleTheme), // ✅ Pass toggleTheme to footer
     );
   }
 
-  Widget _categoryCard(
-    BuildContext context, {
-    required String imagePath,
-    required String label,
-    required VoidCallback onTap,
-  }) {
+  Widget _categoryCard(BuildContext context,
+      {required String imagePath,
+      required String label,
+      required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -162,19 +153,13 @@ class _AppHomeScreenState extends State<AppHomeScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
+                  image: AssetImage(imagePath), fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 10),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          Text(label,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         ],
       ),
     );

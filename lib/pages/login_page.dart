@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color.fromARGB(255, 23, 126, 127),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Color.fromARGB(255, 23, 126, 127),
               ),
               child: const Text(
                 'Login',
@@ -57,7 +57,8 @@ class LoginPage extends StatelessWidget {
               },
               child: const Text(
                 'Register',
-                style: TextStyle(fontSize: 16, color: Colors.deepPurple),
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 23, 126, 127)),
               ),
             ),
           ],
